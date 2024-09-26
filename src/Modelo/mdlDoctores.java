@@ -9,7 +9,7 @@ import java.sql.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Doctores {
+public class mdlDoctores {
     
     private String NombreDoctor;
     private int EdadDoctor;
@@ -55,15 +55,15 @@ public class Doctores {
         Connection conexion = Conexion.getConexion();   
         try {
             //Creamos el PreparedStatement que ejecutará la Query
-            PreparedStatement addProducto = conexion.prepareStatement("INSERT INTO Doctor (NombreDoctor, EdadDoctor, PesoDoctor, CorreoDoctor) VALUES(?, ?, ?, ?)");
+            PreparedStatement addDoctor = conexion.prepareStatement("INSERT INTO Doctor (NombreDoctor, EdadDoctor, PesoDoctor, CorreoDoctor) VALUES(?, ?, ?, ?)");
             //Establecer valores de la consulta SQL
-            addProducto.setString(1, getNombreDoctor());
-            addProducto.setInt(2, getEdadDoctor());
-            addProducto.setDouble(3, getPesoDoctor());
-            addProducto.setString(4, getCorreoDoctor());
+            addDoctor.setString(1, getNombreDoctor());
+            addDoctor.setInt(2, getEdadDoctor());
+            addDoctor.setDouble(3, getPesoDoctor());
+            addDoctor.setString(4, getCorreoDoctor());
  
             //Ejecutar la consulta
-            addProducto.executeUpdate();
+            addDoctor.executeUpdate();
  
         } catch (SQLException ex) {
             System.out.println("este es el error en el modelo:metodo guardar " + ex);
@@ -76,7 +76,7 @@ public class Doctores {
         //Definimos el modelo de la tabla
         DefaultTableModel modeloDeDatos = new DefaultTableModel();
 
-        modeloDeDatos.setColumnIdentifiers(new Object[]{"IdDoctor", "NombreDoctor", "EdadDoctor", "PesoDoctor","CorreoDoctor"});
+        modeloDeDatos.setColumnIdentifiers(new Object[]{"N° Doctor", "Doctor", "Edad", "Peso","Correo"});
         try {
             //Creamos un Statement
             Statement statement = conexion.createStatement();
@@ -149,7 +149,7 @@ public class Doctores {
             String idDoctor = tabla.getValueAt(filaSeleccionada, 0).toString();
             try { 
                 //Ejecutamos la Query
-                PreparedStatement updateUser = conexion.prepareStatement("UPDATE FROM Doctor SET NombreDoctor = ?, EdadDoctor = ?, PesoDoctor = ?, CorreoDoctor = ? WHERE IdDoctor = ?");
+                PreparedStatement updateUser = conexion.prepareStatement("UPDATE Doctor SET NombreDoctor = ?, EdadDoctor = ?, PesoDoctor = ?, CorreoDoctor = ? WHERE IdDoctor = ?");
                 updateUser.setString(1, getNombreDoctor());
                 updateUser.setInt(2, getEdadDoctor());
                 updateUser.setDouble(3, getPesoDoctor());
@@ -163,9 +163,5 @@ public class Doctores {
         } else {
             System.out.println("no");
         }
-    }
-
-    public void set(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

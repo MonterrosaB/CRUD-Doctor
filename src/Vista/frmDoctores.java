@@ -5,7 +5,7 @@
 package Vista;
 
 import Controlador.ctrlDoctores;
-import Modelo.Doctores;
+import Modelo.mdlDoctores;
 
 /**
  *
@@ -21,8 +21,8 @@ public class frmDoctores extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
     }
     
-    public static void initEstudiante(){
-        Doctores modelo = new Doctores();
+    public static void initDoctores(){
+        mdlDoctores modelo = new mdlDoctores();
         frmDoctores vista = new frmDoctores();
         ctrlDoctores controlador = new ctrlDoctores(modelo, vista);
         
@@ -79,6 +79,18 @@ public class frmDoctores extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtbDoctores);
 
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
+
+        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesoKeyTyped(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nombre del Doctor");
 
@@ -104,8 +116,8 @@ public class frmDoctores extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -119,7 +131,7 @@ public class frmDoctores extends javax.swing.JFrame {
                     .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -179,6 +191,41 @@ public class frmDoctores extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+    int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros){
+        evt.consume();
+    }
+      if (txtEdad.getText().trim().length() == 2) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtEdadKeyTyped
+
+    private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
+       char key = evt.getKeyChar();
+
+    // Permite numeros y un punto decimal
+    boolean isDigit = Character.isDigit(key);
+    boolean isDecimalPoint = key == '.';
+
+    // Verifica el texto
+    String currentText = txtPeso.getText().trim();
+    
+    // Si ya hay un punto y el usuario intenta ingresar otro, el evento se consume
+    if (isDecimalPoint && currentText.contains(".")) {
+        evt.consume();
+        return;
+    }
+
+    // verifica la longitud
+    if (currentText.length() >= 5|| (!isDigit && !isDecimalPoint)) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtPesoKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -207,9 +254,9 @@ public class frmDoctores extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+      java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDoctores().setVisible(true);
+                initDoctores();
             }
         });
     }
